@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Add animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Add gradient background overlay -->
+        <div class="gradient-overlay"></div>
+        
+        <div class="weather-card animate__animated animate__fadeIn">
+            <div class="app-header">
+                <h1><i class="fas fa-cloud-sun icon-pulse"></i> Weather Forecast</h1>
+                <p>Get real-time weather updates for any location</p>
+            </div>
+            
+            <form method="POST" class="search-form">
+                <div class="search-container">
+                    <input type="text" name="city" placeholder="Enter city name" required class="search-input">
+                    <button type="submit" class="search-button">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+            </form>
+            
+            {% if weather %}
+            <div class="weather-display animate__animated animate__fadeInUp">
+                <div class="weather-main">
+                    <h2 class="city-name">{{ weather.city }}</h2>
+                    <div class="temperature-container">
+                        <img src="http://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="Weather Icon" class="weather-icon floating">
+                        <span class="temperature">{{ weather.temperature }}°C</span>
+                    </div>
+                    <p class="weather-description">{{ weather.description|capitalize }}</p>
+                </div>
+                
+                <div class="weather-details">
+                    <div class="detail-item slide-in" style="--delay: 0.1s">
+                        <i class="fas fa-temperature-high"></i>
+                        <span>Feels like: {{ weather.feels_like }}°C</span>
+                    </div>
+                    <div class="detail-item slide-in" style="--delay: 0.2s">
+                        <i class="fas fa-tint"></i>
+                        <span>Humidity: {{ weather.humidity }}%</span>
+                    </div>
+                    <div class="detail-item slide-in" style="--delay: 0.3s">
+                        <i class="fas fa-wind"></i>
+                        <span>Wind: {{ weather.wind_speed }} km/h</span>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="app-footer">
+                <p>Powered by OpenWeatherMap</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
